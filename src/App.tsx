@@ -43,40 +43,25 @@ const AIRLINES = [
 ]
 
 const accessKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiNjVjNzFhYTIzOTM1ZDVmMTViZTA4ZDliMTA5ODg0NmE4ZDYyOTIzYTYzZGEwMjQ3OTE4OWNiZTAyMzYzOTdmODUxMjU0YjI3YzJhNzI2ZjciLCJpYXQiOjE2OTI5ODg4MjAsIm5iZiI6MTY5Mjk4ODgyMCwiZXhwIjoxNzI0NjExMjIwLCJzdWIiOiIyMTYzMSIsInNjb3BlcyI6W119.SFUo157R3BBAAKuaEBebEb0ooZC_UKd55fTTnKO-s8s88ICAMR74YPAk9lkq5IyHc1jFBNRqDiZ7xowTOaWArQ'
-
+let contextTicket;
 export const Context = React.createContext({
     isChecked: false,
     onClick: () => {},
     changeOptions: plainChangeOptions,
-    airlines: AIRLINES
+    airlines: AIRLINES,
 });
 function App() {
   const [isChecked, setIsChecked] = useState(false);
-  const [flightTicket, setFlightTicket] = useState<Ticket>(null)
+  const [flightTicket, setFlightTicket] = useState<Ticket[]|null>(null)
 
   function load() {
     fetch(
       `https://vast-brushlands-99372-128b9198810c.herokuapp.com/https://app.goflightlabs.com/retrieveFlights?access_key=${accessKey}&originSkyId=LOND&destinationSkyId=NYCA&originEntityId=27544008&destinationEntityId=27537542&date=2023-10-29`)
       .then(response => response.json())
       .then(data => {
-          data.itineraries.map(flight => {
-            setFlightTicket({
-              id: flight.id,
-              company: `${flight.legs[0].carriers.marketing[0].name}`,
-              from: `${flight.legs[0].origin.name}`,
-              to: `${flight.legs[0].destination.name}`,
-              price: Number(flight.price.raw),
-              currency: 'RUB',
-              date: flight.legs[0].departure,
-              connectionAmount: Number(flight.legs[0].stopCount),
-              duration: Number(flight.legs[0].durationInMinutes),
-              time: {
-                startTime: flight.legs[0].departure,
-                endTime: flight.legs[0].arrival
-              },
-              logo: `${flight.legs[0].carriers.marketing[0].logoUrl}`
-            })
-          })
+         const slicedData =  data.itineraries.slice(0, 7);
+        console.log(slicedData)
+         setFlightTicket([slicedData]);
         }
       )
       .catch(error => console.log(`${error} - Fetching failed`))
@@ -86,7 +71,6 @@ function App() {
     load();
   }, [])
 
-  console.log(flightTicket)
 
     const checkItem = (e: MouseEvent) =>  {
       const target = e.target as HTMLDivElement;
@@ -106,7 +90,7 @@ function App() {
     <>
         <Header />
         <Context.Provider value={{isChecked: isChecked, onClick: checkItem, changeOptions: plainChangeOptions, airlines: AIRLINES}}>
-            <MainContainer />
+            <MainContainer flightTicket={flightTicket}/>
         </Context.Provider>
     </>
   )
