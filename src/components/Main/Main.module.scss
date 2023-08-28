@@ -1,0 +1,114 @@
+.root {
+  display: flex;
+  gap: 50px;
+
+  .optionsMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+.menuCard, .flightOfferCard {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: space-evenly;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: rgba(232, 235, 242, 1);
+  width: 272px;
+  height: 200%;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(133, 138, 227, 1);
+
+  .hide {
+    display: none;
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 20px;
+    color: rgba(78, 20, 140, 1);
+    margin: 20px 0 0 20px;
+  }
+
+  .flightOptionsContainer {
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 15px;
+
+    .checkboxContainer {
+      display: flex;
+      cursor: pointer;
+      user-select: none;
+      gap: 15px;
+      align-items: center;
+
+      .checkbox {
+        position: relative;
+        border: 1px solid rgba(78, 20, 140, 1);
+        border-radius: 4px;
+        width: 21px;
+        height: 21px;
+        //margin-right: 15px;
+      }
+
+      .radioInput {
+        width: 21px;
+        height: 21px;
+        accent-color: rgba(78, 20, 140, 1);
+        outline: rgba(78, 20, 140, 1);
+      }
+
+      .check {
+        position: absolute;
+        left: 3px;
+        top: 2px;
+      }
+    }
+  }
+}
+
+.flightOfferCard {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 727px;
+  height: 174px;
+  padding: 30px 30px 20px 30px;
+  box-sizing: border-box;
+
+  .price, .flightTime {
+    font-weight: 700;
+    font-size: 32px;
+    color: rgba(78, 20, 140, 1);
+  }
+
+  .flightTime {
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .flightOfferCard_firstColumn, .flightOfferCard_thirdColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-self: end;
+  }
+
+  .flightOfferCard_secondColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-self: end;
+  }
+
+  .flightOfferCard_thirdColumn {
+    gap: 45px;
+  }
+}
+
